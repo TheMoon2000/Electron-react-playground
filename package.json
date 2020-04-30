@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "electron-is-dev": "^1.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
@@ -14,7 +15,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "electron-builder --win --x64"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +36,32 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "main": "public/electron.js",
+  "description": "A iOS coding tutorial app built using electron.",
+  "homepage": "./",
+  "build": {
+    "appId": "com.bearstars.iOS-tutorial",
+    "productName": "iOS Game Tutorial",
+    "copyright": "Copyright © 2020 BearStarsEdu Ltd.",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "devDependencies": {
+    "@rescripts/cli": "^0.0.14",
+    "@rescripts/rescript-env": "^0.0.12",
+    "concurrently": "^5.2.0",
+    "electron": "^8.2.4",
+    "electron-builder": "^22.6.0",
+    "typescript": "^3.8.3",
+    "wait-on": "^4.0.2"
   }
 }
